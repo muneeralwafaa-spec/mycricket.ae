@@ -89,7 +89,7 @@ export default function ClassifiedsPage() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {mockAds.map((ad, i) => (
-            <a key={i} href={`/classifieds/${i + 1}`}
+            <a key={i} href="/classifieds"
               className="no-underline rounded-xl overflow-hidden block transition-all duration-200 hover:-translate-y-1 group"
               style={{ background: '#fff', border: ad.featured ? '2px solid var(--gold)' : '1px solid var(--border)' }}>
               <div className="h-32 flex items-center justify-center relative" style={{ background: 'var(--green-light)' }}>
