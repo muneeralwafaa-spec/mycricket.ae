@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --green: #1a7a4a;
+  --green-dark: #0f5233;
+  --green-light: #e8f5ee;
+  --green-mid: #2d9e62;
+  --gold: #c8961e;
+  --gold-light: #f7ecd4;
+  --cream: #faf8f3;
+  --ink: #0d1f0f;
+  --ink-mid: #2a3d2e;
+  --ink-light: #5a7060;
+  --border: rgba(26,122,74,0.15);
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); }
+.font-display { font-family: 'Bebas Neue', cursive; }
+.font-mono-dm { font-family: 'DM Mono', monospace; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::selection { background: var(--green); color: white; }
