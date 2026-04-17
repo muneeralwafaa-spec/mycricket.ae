@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
   --green: #1a7a4a;
@@ -19,16 +17,13 @@
 html { scroll-behavior: smooth; }
 
 body {
-  .font-display {
-  font-family: 'Bebas Neue', Impact, Arial Narrow, sans-serif !important;
-  letter-spacing: 0.04em;
-}
+  font-family: 'DM Sans', sans-serif;
   background: var(--cream);
   color: var(--ink);
 }
 
 .font-display {
-  font-family: 'Bebas Neue', Impact, cursive;
+  font-family: 'Bebas Neue', Impact, Arial Narrow, sans-serif !important;
   letter-spacing: 0.04em;
 }
 
