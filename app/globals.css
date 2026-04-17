@@ -19,7 +19,10 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  .font-display {
+  font-family: 'Bebas Neue', Impact, Arial Narrow, sans-serif !important;
+  letter-spacing: 0.04em;
+}
   background: var(--cream);
   color: var(--ink);
 }
