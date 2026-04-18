@@ -5,13 +5,18 @@ import { useAuth } from '@/components/auth/AuthProvider'
 export const dynamic = 'force-dynamic'
 
 const DASH_LINKS = [
-  { href: '/vendor/bookings',  icon: '📅', label: 'Bookings',   desc: 'Manage all your bookings' },
-  { href: '/vendor/facility',  icon: '🏟️', label: 'Facilities', desc: 'Nets, grounds, time slots' },
-  { href: '/vendor/coach',     icon: '👤', label: 'Services',   desc: 'Coaching sessions & packages' },
-  { href: '/vendor/academy',   icon: '🎓', label: 'Programmes', desc: 'Academy enrolments' },
-  { href: '/vendor/products',  icon: '🛒', label: 'Products',   desc: 'Shop products & inventory' },
-  { href: '/vendor/earnings',  icon: '💰', label: 'Earnings',   desc: 'Revenue & payouts' },
-  { href: '/vendor/settings',  icon: '⚙️', label: 'Settings',   desc: 'Profile, bank details, plan' },
+  { href: '/vendor/bookings',  icon: '📅', label: 'Bookings',     desc: 'Manage all your bookings' },
+  { href: '/vendor/calendar',  icon: '📆', label: 'Calendar',     desc: 'Live booking calendar + walk-ins' },
+  { href: '/vendor/facility',  icon: '🏟️', label: 'Facilities',   desc: 'Nets, grounds, slots' },
+  { href: '/vendor/students',  icon: '👨‍🎓', label: 'Students',    desc: 'Academy student management' },
+  { href: '/vendor/batches',   icon: '👥', label: 'Batches',      desc: 'Training groups & schedules' },
+  { href: '/vendor/attendance',icon: '📋', label: 'Attendance',   desc: 'Mark daily attendance' },
+  { href: '/vendor/fees',      icon: '💵', label: 'Fees',         desc: 'Fee collection & reminders' },
+  { href: '/vendor/packages',  icon: '📦', label: 'Packages',     desc: 'Coach session packages' },
+  { href: '/vendor/orders',    icon: '🛍️', label: 'Orders',       desc: 'Shop order fulfilment' },
+  { href: '/vendor/products',  icon: '🛒', label: 'Products',     desc: 'Shop products & inventory' },
+  { href: '/vendor/earnings',  icon: '💰', label: 'Earnings',     desc: 'Revenue & payouts' },
+  { href: '/vendor/settings',  icon: '⚙️', label: 'Settings',     desc: 'Profile, bank details, plan' },
 ]
 
 export default function VendorDashboardPage() {
