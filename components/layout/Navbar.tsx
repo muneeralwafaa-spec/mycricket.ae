@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, X, ShoppingCart, ChevronDown, LogOut, LayoutDashboard, Package, User, Calendar } from 'lucide-react'
 import { useAuth } from '@/components/auth/AuthProvider'
@@ -15,6 +15,21 @@ const navLinks = [
 ]
 
 export default function Navbar() {
+  const [cartCount, setCartCount] = useState(0)
+  
+  useEffect(() => {
+    const updateCount = () => {
+      try {
+        const data = localStorage.getItem('mycricket_cart')
+        const cart = data ? JSON.parse(data) : []
+        setCartCount(cart.reduce((s: number, i: { qty: number }) => s + i.qty, 0))
+      } catch { setCartCount(0) }
+    }
+    updateCount()
+    window.addEventListener('cart-updated', updateCount)
+    return () => window.removeEventListener('cart-updated', updateCount)
+  }, [])
+
   const [open, setOpen] = useState(false)
   const [userMenu, setUserMenu] = useState(false)
   const { user, profile, signOut, isVendor } = useAuth()
@@ -49,8 +64,10 @@ export default function Navbar() {
               className="relative w-9 h-9 flex items-center justify-center rounded-lg"
               style={{ color: 'rgba(255,255,255,0.6)' }}>
               <ShoppingCart size={18} />
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-white font-bold"
-                style={{ background: 'var(--red)', fontSize: 9 }}>2</span>
+              {cartCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-white font-bold"
+                  style={{ background: 'var(--red)', fontSize: 9 }}>{cartCount}</span>
+              )}
             </Link>
 
             {user ? (

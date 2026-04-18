@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Star, Truck, Shield, RefreshCw, ShoppingCart, Heart, Share2, ChevronLeft } from 'lucide-react'
+import AddToCartButton from '@/components/shop/AddToCartButton'
 
 const PRODUCTS: Record<string, {
   id: string; name: string; brand: string; category: string; price: number
@@ -154,6 +155,7 @@ const PRODUCTS: Record<string, {
 
 const RELATED_IDS = ['gn-legend-dxm', 'sg-test-ball-6pk', 'kookaburra-helmet-pro500', 'adidas-batting-gloves']
 
+
 export async function generateStaticParams() {
   return Object.keys(PRODUCTS).map(slug => ({ slug }))
 }
@@ -259,11 +261,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
             {/* Quantity + Add to cart */}
             <div className="space-y-3 mb-5">
-              <button className="w-full py-4 rounded-2xl text-base font-medium text-white transition-all"
-                style={{ background: 'var(--red)' }}>
-                <ShoppingCart size={16} className="inline mr-2" />
-                Add to Cart — AED {p.price}
-              </button>
+              <AddToCartButton product={p} />
               <div className="flex gap-3">
                 <button className="flex-1 py-3 rounded-2xl text-sm flex items-center justify-center gap-2"
                   style={{ border: '1px solid var(--border)', color: 'var(--ink)' }}>
