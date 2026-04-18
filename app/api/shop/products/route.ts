@@ -4,44 +4,28 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 export async function GET(req: NextRequest) {
   const supabase = await createServerSupabaseClient()
   const { searchParams } = new URL(req.url)
-
   const category = searchParams.get('category')
-  const brand = searchParams.get('brand')
   const vendor = searchParams.get('vendor')
-  const featured = searchParams.get('featured')
-  const q = searchParams.get('q')
-  const minPrice = searchParams.get('min_price')
-  const maxPrice = searchParams.get('max_price')
-  const sort = searchParams.get('sort') ?? 'featured'
-  const limit = Number(searchParams.get('limit') ?? 24)
-  const offset = Number(searchParams.get('offset') ?? 0)
+  const search = searchParams.get('search')
+  const isVendorView = vendor === 'true'
 
-  let query = supabase
-    .from('products')
-    .select('*, vendor:vendors(id,shop_name,slug,rating), category:product_categories(id,name,icon)', { count: 'exact' })
-    .eq('status', 'active')
-    .range(offset, offset + limit - 1)
-
-  if (category) query = query.eq('category_id', category)
-  if (brand) query = query.ilike('brand', brand)
-  if (vendor) query = query.eq('vendor_id', vendor)
-  if (featured === 'true') query = query.eq('is_featured', true)
-  if (q) query = query.or(`name.ilike.%${q}%,brand.ilike.%${q}%`)
-  if (minPrice) query = query.gte('price', Number(minPrice))
-  if (maxPrice) query = query.lte('price', Number(maxPrice))
-
-  switch (sort) {
-    case 'price_asc':  query = query.order('price', { ascending: true }); break
-    case 'price_desc': query = query.order('price', { ascending: false }); break
-    case 'rating':     query = query.order('rating', { ascending: false }); break
-    case 'newest':     query = query.order('created_at', { ascending: false }); break
-    default:
-      query = query.order('is_featured', { ascending: false }).order('sales_count', { ascending: false })
+  if (isVendorView) {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    const { data: vendorProfile } = await supabase.from('vendor_profiles').select('id').eq('user_id', user.id).single()
+    if (!vendorProfile) return NextResponse.json({ data: [] })
+    const { data, error } = await supabase.from('products').select('*').eq('vendor_id', vendorProfile.id).order('created_at', { ascending: false })
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ data })
   }
 
-  const { data, error, count } = await query
+  let query = supabase.from('products').select(`*, vendor:vendors(business_name, is_verified)`).eq('is_active', true).order('created_at', { ascending: false })
+  if (category) query = query.eq('category', category)
+  if (search) query = query.ilike('name', `%${search}%`)
+
+  const { data, error } = await query
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-  return NextResponse.json({ data, count, limit, offset })
+  return NextResponse.json({ data })
 }
 
 export async function POST(req: NextRequest) {
@@ -49,18 +33,23 @@ export async function POST(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  // Get vendor id
-  const { data: vendor } = await supabase
-    .from('vendors').select('id').eq('user_id', user.id).eq('status', 'active').single()
-  if (!vendor) return NextResponse.json({ error: 'No active vendor account' }, { status: 403 })
+  const { data: vendorProfile } = await supabase.from('vendor_profiles').select('id').eq('user_id', user.id).single()
+  if (!vendorProfile) return NextResponse.json({ error: 'Vendor profile not found' }, { status: 404 })
 
   const body = await req.json()
-  const slug = body.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now()
+  const { name, description, category, brand, condition, price, compare_price, stock_qty, sku, images, is_active, specifications, includes } = body
 
-  const { data, error } = await supabase
-    .from('products')
-    .insert({ ...body, slug, vendor_id: vendor.id, status: body.status ?? 'draft' })
-    .select().single()
+  const { data, error } = await supabase.from('products').insert({
+    name, description, category, brand,
+    condition: condition || 'new',
+    price, compare_price, stock_qty,
+    sku, images: images || [],
+    is_active: is_active !== false,
+    vendor_id: vendorProfile.id,
+    vendor_profile_id: vendorProfile.id,
+    specifications: specifications?.filter((s: { key: string; value: string }) => s.key && s.value) || [],
+    includes_list: includes?.filter((s: string) => s) || [],
+  }).select().single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ data }, { status: 201 })

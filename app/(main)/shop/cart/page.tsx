@@ -1,163 +1,170 @@
 'use client'
-export const dynamic = 'force-dynamic'
 import { useState } from 'react'
 import Link from 'next/link'
-import { Trash2, ShoppingBag, Tag, Truck } from 'lucide-react'
-import { formatAED, UAE_SHIPPING_FEE, FREE_SHIPPING_THRESHOLD } from '@/lib/utils'
+import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react'
 
-const initialItems = [
-  { id: '1', name: 'Gray Nicolls Legend DXM 5 Star', brand: 'Gray Nicolls', variant: 'SH Short Handle', price: 899, qty: 1, icon: '🏏', vendor: 'Cricket Store Dubai' },
-  { id: '2', name: 'Custom Team Jersey Set (11 pcs)', brand: 'Custom Print', variant: 'Medium / Your Design', price: 950, qty: 1, icon: '🎽', vendor: 'UAE Cricket Kits' },
-  { id: '3', name: 'SG Test Match Red Ball (6pk)', brand: 'SG', variant: null, price: 280, qty: 2, icon: '⚾', vendor: 'Cricket Store Dubai' },
+const SAMPLE_CART = [
+  { id: 'gn-legend-dxm', name: 'Gray Nicolls Legend DXM', vendor: 'Cricket Store Dubai', price: 899, qty: 1, image: 'https://images.unsplash.com/photo-1574226516831-e1dff420e562?w=200&q=70' },
+  { id: 'kookaburra-helmet-pro500', name: 'Kookaburra Pro 500 Helmet (Medium)', vendor: 'Sports World UAE', price: 450, qty: 1, image: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=200&q=70' },
 ]
 
 export default function CartPage() {
-  const [items, setItems] = useState(initialItems)
-  const [promoCode, setPromoCode] = useState('')
+  const [items, setItems] = useState(SAMPLE_CART)
+  const [promo, setPromo] = useState('')
   const [promoApplied, setPromoApplied] = useState(false)
 
-  const updateQty = (id: string, qty: number) => {
-    if (qty < 1) return
-    setItems(prev => prev.map(i => i.id === id ? { ...i, qty } : i))
+  const updateQty = (id: string, delta: number) => {
+    setItems(prev => prev.map(i => i.id === id ? { ...i, qty: Math.max(1, i.qty + delta) } : i))
   }
-  const removeItem = (id: string) => setItems(prev => prev.filter(i => i.id !== id))
+  const remove = (id: string) => setItems(prev => prev.filter(i => i.id !== id))
+  const applyPromo = () => { if (promo.toUpperCase() === 'CRICKET10') setPromoApplied(true) }
 
   const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0)
   const discount = promoApplied ? Math.round(subtotal * 0.1) : 0
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : UAE_SHIPPING_FEE
-  const total = subtotal - discount + shipping
+  const delivery = subtotal >= 200 ? 0 : 25
+  const total = subtotal - discount + delivery
+
+  // Group by vendor
+  const vendors = [...new Set(items.map(i => i.vendor))]
+
+  if (items.length === 0) return (
+    <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
+      <div style={{ background: 'var(--black)' }} className="px-4 py-16">
+        <div className="container-uae">
+          <h1 className="font-display text-5xl text-white mb-2">Your Cart</h1>
+        </div>
+      </div>
+      <div className="container-uae py-20 text-center">
+        <div className="text-6xl mb-4">🛒</div>
+        <h2 className="font-display text-3xl mb-3" style={{ color: 'var(--black)' }}>Your cart is empty</h2>
+        <p className="text-sm mb-6" style={{ color: 'var(--ink-light)' }}>Browse our cricket gear marketplace</p>
+        <Link href="/shop" className="inline-block px-6 py-3 rounded-xl text-sm font-medium text-white" style={{ background: 'var(--red)' }}>
+          Continue Shopping →
+        </Link>
+      </div>
+    </div>
+  )
 
   return (
-    <div style={{ background: 'var(--cream)', minHeight: '100vh' }} className="px-4 py-10">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-3 mb-8">
-          <ShoppingBag size={24} style={{ color: 'var(--green)' }} />
-          <h1 className="font-display text-4xl tracking-wide" style={{ color: 'var(--ink)' }}>
-            Your Cart
-          </h1>
-          <span className="text-sm px-2.5 py-1 rounded-full font-mono-dm"
-            style={{ background: 'var(--green-light)', color: 'var(--green)' }}>
-            {items.reduce((s,i)=>s+i.qty,0)} items
-          </span>
+    <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
+      <div style={{ background: 'var(--black)' }} className="px-4 py-12">
+        <div className="container-uae">
+          <h1 className="font-display text-5xl text-white mb-1">Your Cart</h1>
+          <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>{items.length} item{items.length !== 1 ? 's' : ''} from {vendors.length} vendor{vendors.length !== 1 ? 's' : ''}</p>
         </div>
+      </div>
 
-        {items.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="text-6xl mb-4">🛒</div>
-            <h2 className="font-display text-3xl mb-3" style={{ color: 'var(--ink)' }}>Your cart is empty</h2>
-            <p className="text-sm mb-6" style={{ color: 'var(--ink-light)' }}>Browse our cricket shop and add some gear!</p>
-            <Link href="/shop" className="inline-block px-8 py-3 rounded-lg text-sm font-medium no-underline"
-              style={{ background: 'var(--green)', color: '#fff' }}>
-              Continue Shopping
+      <div className="container-uae py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Cart items */}
+          <div className="lg:col-span-2 space-y-4">
+            {vendors.map(vendor => (
+              <div key={vendor} className="rounded-2xl overflow-hidden" style={{ border: '1px solid var(--border)' }}>
+                <div className="px-5 py-3 flex items-center gap-2" style={{ background: 'var(--off-white)', borderBottom: '1px solid var(--border)' }}>
+                  <span className="text-xs font-medium" style={{ color: 'var(--red)' }}>🏪 {vendor}</span>
+                  <span className="text-xs" style={{ color: 'var(--green)' }}>✓ Verified</span>
+                </div>
+                {items.filter(i => i.vendor === vendor).map(item => (
+                  <div key={item.id} className="flex items-start gap-4 p-5" style={{ background: 'var(--white)', borderBottom: '1px solid var(--border)' }}>
+                    <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <Link href={`/shop/product/${item.id}`} className="text-sm font-medium line-clamp-2 hover:underline" style={{ color: 'var(--black)' }}>
+                        {item.name}
+                      </Link>
+                      <div className="font-display text-xl mt-1" style={{ color: 'var(--green)' }}>AED {item.price}</div>
+                      <div className="flex items-center gap-3 mt-2">
+                        <div className="flex items-center rounded-lg overflow-hidden" style={{ border: '1px solid var(--border)' }}>
+                          <button onClick={() => updateQty(item.id, -1)} className="w-8 h-8 flex items-center justify-center hover:bg-gray-50">
+                            <Minus size={12} />
+                          </button>
+                          <span className="w-8 text-center text-sm font-medium" style={{ color: 'var(--black)' }}>{item.qty}</span>
+                          <button onClick={() => updateQty(item.id, 1)} className="w-8 h-8 flex items-center justify-center hover:bg-gray-50">
+                            <Plus size={12} />
+                          </button>
+                        </div>
+                        <button onClick={() => remove(item.id)} className="flex items-center gap-1 text-xs" style={{ color: 'var(--red)' }}>
+                          <Trash2 size={12} /> Remove
+                        </button>
+                      </div>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <div className="font-display text-xl" style={{ color: 'var(--black)' }}>AED {item.price * item.qty}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+
+            <Link href="/shop" className="flex items-center gap-2 text-sm" style={{ color: 'var(--red)' }}>
+              <ShoppingBag size={14} /> Continue Shopping
             </Link>
           </div>
-        ) : (
-          <div className="grid lg:grid-cols-3 gap-8">
 
-            {/* Items */}
-            <div className="lg:col-span-2 space-y-4">
-              {items.map(item => (
-                <div key={item.id} className="rounded-xl p-4 flex gap-4"
-                  style={{ background: '#fff', border: '1px solid var(--border)' }}>
-                  <div className="w-20 h-20 rounded-xl flex items-center justify-center text-3xl flex-shrink-0"
-                    style={{ background: 'var(--green-light)' }}>
-                    {item.icon}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-mono-dm mb-0.5" style={{ color: 'var(--ink-light)' }}>{item.brand}</div>
-                    <div className="text-sm font-medium mb-0.5" style={{ color: 'var(--ink)' }}>{item.name}</div>
-                    {item.variant && (
-                      <div className="text-xs mb-2" style={{ color: 'var(--ink-light)' }}>{item.variant}</div>
-                    )}
-                    <div className="text-xs" style={{ color: 'var(--ink-light)' }}>Sold by: {item.vendor}</div>
-                  </div>
-                  <div className="flex flex-col items-end gap-3 flex-shrink-0">
-                    <span className="font-display text-xl tracking-wide" style={{ color: 'var(--green)' }}>
-                      {formatAED(item.price * item.qty)}
-                    </span>
-                    <div className="flex items-center rounded-lg overflow-hidden" style={{ border: '1px solid var(--border)' }}>
-                      <button onClick={() => updateQty(item.id, item.qty-1)}
-                        className="w-8 h-8 flex items-center justify-center transition-colors hover:bg-[var(--green-light)]"
-                        style={{ color: 'var(--ink)', borderRight: '1px solid var(--border)' }}>−</button>
-                      <span className="w-8 text-center text-sm" style={{ color: 'var(--ink)' }}>{item.qty}</span>
-                      <button onClick={() => updateQty(item.id, item.qty+1)}
-                        className="w-8 h-8 flex items-center justify-center transition-colors hover:bg-[var(--green-light)]"
-                        style={{ color: 'var(--ink)', borderLeft: '1px solid var(--border)' }}>+</button>
-                    </div>
-                    <button onClick={() => removeItem(item.id)} className="text-xs flex items-center gap-1 transition-colors hover:text-red-500"
-                      style={{ color: 'var(--ink-light)' }}>
-                      <Trash2 size={12} /> Remove
-                    </button>
-                  </div>
-                </div>
-              ))}
+          {/* Order summary */}
+          <div>
+            <div className="rounded-2xl p-5 sticky top-24" style={{ background: 'var(--white)', border: '2px solid var(--red)' }}>
+              <h2 className="font-display text-2xl mb-4" style={{ color: 'var(--black)' }}>Order Summary</h2>
 
               {/* Promo code */}
-              <div className="rounded-xl p-4 flex gap-3" style={{ background: '#fff', border: '1px solid var(--border)' }}>
-                <Tag size={16} className="mt-2.5 flex-shrink-0" style={{ color: 'var(--ink-light)' }} />
-                <input value={promoCode} onChange={e => setPromoCode(e.target.value)}
-                  placeholder="Promo code"
-                  className="flex-1 bg-transparent outline-none text-sm py-2" style={{ color: 'var(--ink)' }} />
-                <button onClick={() => setPromoApplied(promoCode.toLowerCase() === 'cricket10')}
-                  className="px-5 py-2 rounded-lg text-sm font-medium transition-all"
-                  style={{ background: 'var(--green-light)', color: 'var(--green)', border: '1px solid var(--border)' }}>
-                  Apply
-                </button>
-              </div>
-              {promoApplied && (
-                <div className="text-xs px-4 py-2 rounded-lg" style={{ background: '#EAF3DE', color: '#3B6D11' }}>
-                  ✓ Promo code applied — 10% discount!
+              <div className="mb-4">
+                <div className="flex gap-2">
+                  <input value={promo} onChange={e => setPromo(e.target.value.toUpperCase())}
+                    placeholder="Promo code (try CRICKET10)"
+                    className="flex-1 px-3 py-2 rounded-xl text-xs outline-none"
+                    style={{ border: '1px solid var(--border)', color: 'var(--black)' }} />
+                  <button onClick={applyPromo}
+                    className="px-3 py-2 rounded-xl text-xs font-medium text-white"
+                    style={{ background: 'var(--green)' }}>
+                    Apply
+                  </button>
                 </div>
-              )}
-            </div>
+                {promoApplied && <p className="text-xs mt-1" style={{ color: 'var(--green)' }}>✓ CRICKET10 applied — 10% off!</p>}
+              </div>
 
-            {/* Summary */}
-            <div className="space-y-4">
-              <div className="rounded-xl p-5" style={{ background: '#fff', border: '1px solid var(--border)' }}>
-                <h2 className="font-display text-2xl tracking-wide mb-5" style={{ color: 'var(--ink)' }}>
-                  Order Summary
-                </h2>
-                <div className="space-y-3 mb-5">
-                  {[
-                    { label: 'Subtotal', val: formatAED(subtotal) },
-                    ...(discount > 0 ? [{ label: 'Discount (10%)', val: `–${formatAED(discount)}` }] : []),
-                    { label: 'Shipping', val: shipping === 0 ? 'Free 🎉' : formatAED(shipping) },
-                  ].map(r => (
-                    <div key={r.label} className="flex justify-between text-sm">
-                      <span style={{ color: 'var(--ink-light)' }}>{r.label}</span>
-                      <span style={{ color: r.label === 'Discount (10%)' ? '#3B6D11' : 'var(--ink)' }}>{r.val}</span>
-                    </div>
-                  ))}
-                  <div className="flex justify-between items-baseline pt-3" style={{ borderTop: '1px solid var(--border)' }}>
-                    <span className="font-medium" style={{ color: 'var(--ink)' }}>Total</span>
-                    <span className="font-display text-2xl tracking-wide" style={{ color: 'var(--green)' }}>
-                      {formatAED(total)}
-                    </span>
+              {/* Breakdown */}
+              <div className="space-y-2 mb-4">
+                <div className="flex justify-between text-sm">
+                  <span style={{ color: 'var(--ink-light)' }}>Subtotal ({items.reduce((s,i) => s + i.qty, 0)} items)</span>
+                  <span style={{ color: 'var(--black)' }}>AED {subtotal}</span>
+                </div>
+                {discount > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span style={{ color: 'var(--green)' }}>Discount (CRICKET10)</span>
+                    <span style={{ color: 'var(--green)' }}>−AED {discount}</span>
                   </div>
+                )}
+                <div className="flex justify-between text-sm">
+                  <span style={{ color: 'var(--ink-light)' }}>Delivery</span>
+                  <span style={{ color: delivery === 0 ? 'var(--green)' : 'var(--black)' }}>
+                    {delivery === 0 ? 'FREE' : `AED ${delivery}`}
+                  </span>
                 </div>
-                <Link href="/shop/checkout"
-                  className="block text-center py-3 rounded-xl text-sm font-medium no-underline transition-opacity hover:opacity-90"
-                  style={{ background: 'var(--gold)', color: 'var(--ink)' }}>
-                  Proceed to Checkout →
-                </Link>
-                <Link href="/shop" className="block text-center mt-3 text-xs no-underline"
-                  style={{ color: 'var(--ink-light)' }}>
-                  ← Continue Shopping
-                </Link>
+                {delivery > 0 && (
+                  <p className="text-xs" style={{ color: 'var(--ink-light)' }}>
+                    Add AED {200 - subtotal} more for free delivery
+                  </p>
+                )}
               </div>
 
-              {/* Shipping info */}
-              {shipping > 0 && (
-                <div className="rounded-xl p-4 flex items-start gap-3" style={{ background: 'var(--green-light)', border: '1px solid var(--border)' }}>
-                  <Truck size={16} className="mt-0.5 flex-shrink-0" style={{ color: 'var(--green)' }} />
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--ink-light)' }}>
-                    Add <strong style={{ color: 'var(--green)' }}>{formatAED(FREE_SHIPPING_THRESHOLD - subtotal)}</strong> more to get free delivery!
-                  </p>
-                </div>
-              )}
+              <div className="flex justify-between text-base font-medium py-3 mb-4"
+                style={{ borderTop: '2px solid var(--border)' }}>
+                <span style={{ color: 'var(--black)' }}>Total</span>
+                <span className="font-display text-2xl" style={{ color: 'var(--green)' }}>AED {total}</span>
+              </div>
+
+              <Link href="/shop/checkout"
+                className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl text-sm font-medium text-white"
+                style={{ background: 'var(--red)' }}>
+                Proceed to Checkout <ArrowRight size={16} />
+              </Link>
+              <p className="text-xs text-center mt-3" style={{ color: 'var(--ink-light)' }}>
+                🔒 Secure checkout via Telr (UAE) or Stripe
+              </p>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   )
