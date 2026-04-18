@@ -1,62 +1,186 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { MapPin, Star, Phone } from 'lucide-react'
-export const metadata: Metadata = { title: 'Cricket Shops in UAE | Buy Cricket Gear — MyCricket.ae' }
+export const metadata: Metadata = { title: 'Cricket Shops UAE — Multi-Vendor Marketplace | MyCricket.ae' }
 
-const shops = [
-  { name: 'ICC Academy Cricket Store', area: 'Dubai Sports City, Dubai', desc: 'Fully equipped cricket retail store at the ICC Academy. Wide range of bats, kits, gloves, pads, balls from top brands including Gray Nicolls, Kookaburra, SG, SS Ton, Dukes.', brands: ['Gray Nicolls', 'Kookaburra', 'SG', 'SS Ton'], phone: '+971 54 305 7133', website: 'https://www.iccacademy.com', rating: 4.8, reviews: 134, image: 'https://images.unsplash.com/photo-1574226516831-e1dff420e562?w=400&q=80', verified: true },
-  { name: 'Sun & Sand Sports — JBR', area: 'Jumeirah Beach Residence, Dubai', desc: 'Sun & Sand Sports multi-brand sports store. Good selection of cricket equipment including Kookaburra and SG range. Also stocks cricket shoes and accessories.', brands: ['Kookaburra', 'SG', 'Adidas'], phone: null, website: 'https://www.sunandsand.com', rating: 4.3, reviews: 89, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80', verified: true },
-  { name: 'Al Ain Sports — Bur Dubai', area: 'Bur Dubai', desc: 'Popular cricket equipment shop in Bur Dubai. Good prices on bats, pads, gloves and kit bags. Popular with the South Asian cricket community in Dubai.', brands: ['SG', 'SS Ton', 'BDM', 'MRF'], phone: null, website: null, rating: 4.2, reviews: 67, image: 'https://images.unsplash.com/photo-1529516548873-9ce57c8f155e?w=400&q=80', verified: false },
-  { name: 'Cricket Gear UAE (Online)', area: 'Delivers UAE-wide', desc: 'Online cricket equipment store delivering across UAE. Competitive prices on all major brands. Free delivery on orders over AED 200.', brands: ['All major brands'], phone: null, website: null, rating: 4.4, reviews: 156, image: 'https://images.unsplash.com/photo-1625245488600-e55f92498e37?w=400&q=80', verified: false },
-  { name: 'Danube Sports World — Cricket Section', area: 'Near SZR, Dubai', desc: 'Sports megastore with dedicated cricket section. Danube Cricket Academy is based here. Wide range of equipment from beginner to professional level.', brands: ['Kookaburra', 'Gray Nicolls', 'SG'], phone: null, website: null, rating: 4.5, reviews: 78, image: 'https://images.unsplash.com/photo-1593341646782-e0b495cff86d?w=400&q=80', verified: true },
-  { name: 'List Your Cricket Shop', area: 'All UAE', desc: 'Are you a cricket gear retailer? Get listed on MyCricket.ae and reach thousands of cricket players across the UAE.', brands: [], phone: null, website: null, rating: 0, reviews: 0, image: null, cta: true, verified: false },
+const VENDORS = [
+  {
+    id: 'cricket-store-dubai', name: 'Cricket Store Dubai', emirate: 'Dubai', area: 'Al Quoz',
+    rating: 4.8, reviews: 312, products: 24, orders: 450, verified: true,
+    desc: 'Dubai\'s largest cricket equipment store. Stocks all major brands — Gray Nicolls, Kookaburra, SG, MRF. Same-day delivery in Dubai.',
+    speciality: 'Bats & Equipment', emoji: '🏏',
+    highlights: ['Same-day Dubai delivery', 'Gray Nicolls authorised dealer', '24 products listed', 'Est. 2015'],
+    whatsapp: '+97150000001',
+  },
+  {
+    id: 'sports-world-uae', name: 'Sports World UAE', emirate: 'Dubai', area: 'Deira',
+    rating: 4.7, reviews: 241, products: 18, orders: 380, verified: true,
+    desc: 'Premium cricket and multi-sport retailer. Specialists in protective gear — helmets, pads, gloves. Adidas, New Balance, Kookaburra stockist.',
+    speciality: 'Protective Gear & Shoes', emoji: '⛑️',
+    highlights: ['Adidas official stockist', 'New Balance cricket range', '18 products', 'Walk-in store available'],
+    whatsapp: '+97150000002',
+  },
+  {
+    id: 'uae-cricket-kits', name: 'UAE Cricket Kits', emirate: 'Dubai', area: 'Dubai Sports City',
+    rating: 4.9, reviews: 203, products: 12, orders: 620, verified: true,
+    desc: 'UAE\'s #1 custom cricket jersey and kit specialist. Full sublimation printing, 7-day turnaround. Used by 200+ UAE cricket clubs.',
+    speciality: 'Custom Jerseys & Kits', emoji: '🎽',
+    highlights: ['200+ club clients', '7-day delivery', 'Min 5 pieces', 'Free design service'],
+    whatsapp: '+97150000003',
+  },
+  {
+    id: 'icc-academy-store', name: 'ICC Academy Store', emirate: 'Dubai', area: 'Dubai Sports City',
+    rating: 4.9, reviews: 124, products: 31, orders: 290, verified: true,
+    desc: 'Official store of ICC Cricket Academy Dubai. Professional and academy-grade equipment. Bowling machines, match balls, team kits.',
+    speciality: 'Professional & Academy Equipment', emoji: '🏆',
+    highlights: ['ICC Academy official', 'Professional grade only', 'Bowling machines in stock', 'Team discounts available'],
+    whatsapp: '+97154305133',
+  },
+]
+
+const STATS = [
+  { label: 'Verified Vendors', value: '4+' },
+  { label: 'Products Listed', value: '85+' },
+  { label: 'Orders Completed', value: '1,700+' },
+  { label: 'UAE Delivery', value: 'Free AED 200+' },
 ]
 
 export default function ShopsPage() {
   return (
     <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
-      <div style={{ background: 'var(--black)' }} className="px-4 py-16">
+      {/* Hero */}
+      <div style={{ background: 'var(--black)' }} className="px-4 py-14">
         <div className="container-uae">
-          <div className="font-mono-dm text-xs tracking-widest uppercase mb-3" style={{ color: 'var(--red)' }}>Buy Gear</div>
-          <h1 className="font-display text-5xl md:text-6xl text-white mb-2">Cricket Shops UAE</h1>
-          <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>Find cricket equipment stores and online retailers across the UAE</p>
+          <div className="font-mono-dm text-xs tracking-widest uppercase mb-3" style={{ color: 'var(--red)' }}>Multi-Vendor Marketplace</div>
+          <h1 className="font-display text-5xl md:text-6xl text-white mb-3">Cricket Shops UAE</h1>
+          <p className="text-sm mb-8" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            Verified cricket equipment vendors across the UAE. Shop from multiple stores in one checkout.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {STATS.map(s => (
+              <div key={s.label} className="rounded-2xl p-4 text-center"
+                style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <div className="font-display text-2xl text-white mb-0.5">{s.value}</div>
+                <div className="text-xs font-mono-dm" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-      <div className="container-uae py-10">
-        <div className="flex gap-3 mb-6 flex-wrap">
-          <Link href="/shop" className="px-4 py-2 rounded-xl text-sm font-medium text-white" style={{ background: 'var(--red)' }}>🛒 Shop Online Now →</Link>
-          <Link href="/classifieds" className="px-4 py-2 rounded-xl text-sm" style={{ border: '1px solid var(--border)', color: 'var(--ink)', background: 'var(--white)' }}>📋 Buy Used Gear</Link>
+
+      <div className="container-uae py-8">
+        {/* How multi-vendor works */}
+        <div className="rounded-2xl p-6 mb-8" style={{ background: 'var(--white)', border: '1px solid var(--border)' }}>
+          <h2 className="font-display text-2xl mb-4" style={{ color: 'var(--black)' }}>How Multi-Vendor Shopping Works</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            {[
+              { step: '1', icon: '🔍', title: 'Browse Products', desc: 'Shop from multiple UAE cricket vendors in one place' },
+              { step: '2', icon: '🛒', title: 'Add to Cart', desc: 'Mix products from different vendors in one cart' },
+              { step: '3', icon: '💳', title: 'Single Checkout', desc: 'Pay once — we handle distribution to each vendor' },
+              { step: '4', icon: '📦', title: 'Direct Delivery', desc: 'Each vendor ships their items to your door' },
+            ].map(s => (
+              <div key={s.step} className="text-center p-4 rounded-2xl" style={{ background: 'var(--off-white)' }}>
+                <div className="text-3xl mb-2">{s.icon}</div>
+                <div className="font-display text-lg mb-1" style={{ color: 'var(--black)' }}>{s.title}</div>
+                <p className="text-xs" style={{ color: 'var(--ink-light)' }}>{s.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {shops.map((s, i) => (
-            <div key={i} className="rounded-2xl overflow-hidden card-hover"
-              style={{ background: (s as any).cta ? 'var(--black)' : 'var(--white)', border: (s as any).cta ? '2px dashed rgba(239,51,64,0.4)' : '1px solid var(--border)' }}>
-              {s.image && <img src={s.image} alt={s.name} className="w-full h-36 object-cover" loading="lazy" />}
-              {(s as any).cta && <div className="h-36 flex items-center justify-center text-5xl" style={{ background: 'rgba(255,255,255,0.05)' }}>🏪</div>}
-              <div className="p-5">
-                <h3 className="text-sm font-medium mb-1" style={{ color: (s as any).cta ? 'white' : 'var(--black)' }}>{s.name}</h3>
-                <div className="flex items-center gap-1 text-xs mb-2" style={{ color: (s as any).cta ? 'rgba(255,255,255,0.5)' : 'var(--ink-light)' }}>
-                  <MapPin size={11} /> {s.area}
+
+        {/* Vendor cards */}
+        <h2 className="font-display text-3xl mb-5" style={{ color: 'var(--black)' }}>Our Verified Vendors</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
+          {VENDORS.map(v => (
+            <div key={v.id} className="rounded-2xl overflow-hidden" style={{ background: 'var(--white)', border: '2px solid var(--border)' }}>
+              {/* Vendor header */}
+              <div className="p-5" style={{ background: 'var(--black)' }}>
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: 'rgba(255,255,255,0.1)', fontSize: 28 }}>
+                    {v.emoji}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-display text-xl text-white">{v.name}</h3>
+                      {v.verified && <span className="text-xs px-2 py-0.5 rounded-full text-white" style={{ background: 'var(--green)', fontSize: 10 }}>✓ Verified</span>}
+                    </div>
+                    <div className="text-xs mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                      📍 {v.area}, {v.emirate} · ⭐ {v.rating} ({v.reviews} reviews)
+                    </div>
+                    <span className="text-xs px-2.5 py-1 rounded-full" style={{ background: 'rgba(239,51,64,0.2)', color: 'var(--red)' }}>
+                      {v.speciality}
+                    </span>
+                  </div>
                 </div>
-                <p className="text-xs leading-relaxed mb-3" style={{ color: (s as any).cta ? 'rgba(255,255,255,0.5)' : 'var(--ink-light)' }}>{s.desc}</p>
-                {s.brands.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mb-3">
-                    {s.brands.map(b => <span key={b} className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'var(--green-light)', color: 'var(--green)' }}>{b}</span>)}
-                  </div>
-                )}
-                {(s as any).cta ? (
-                  <Link href="/list-business" className="block py-2 rounded-xl text-xs font-medium text-center text-white" style={{ background: 'var(--red)' }}>
-                    List Your Shop Free →
+              </div>
+
+              {/* Vendor body */}
+              <div className="p-5">
+                <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--ink-light)' }}>{v.desc}</p>
+
+                {/* Stats */}
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  {[
+                    { label: 'Products', value: v.products },
+                    { label: 'Orders', value: v.orders + '+' },
+                    { label: 'Rating', value: v.rating },
+                  ].map(s => (
+                    <div key={s.label} className="rounded-xl p-3 text-center" style={{ background: 'var(--off-white)' }}>
+                      <div className="font-display text-xl" style={{ color: 'var(--red)' }}>{s.value}</div>
+                      <div className="text-xs" style={{ color: 'var(--ink-light)' }}>{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Highlights */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {v.highlights.map(h => (
+                    <span key={h} className="text-xs px-2.5 py-1 rounded-full"
+                      style={{ background: 'var(--green-light)', color: 'var(--green)' }}>
+                      ✓ {h}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2">
+                  <Link href={`/shop?vendor=${v.id}`}
+                    className="flex-1 py-2.5 rounded-xl text-sm font-medium text-white text-center"
+                    style={{ background: 'var(--red)' }}>
+                    Browse Products →
                   </Link>
-                ) : (
-                  <div className="flex items-center justify-between">
-                    {s.rating > 0 && <div className="flex items-center gap-1 text-xs"><Star size={11} style={{ color: 'var(--gold)', fill: 'var(--gold)' }} /><span style={{ color: 'var(--gold)' }}>{s.rating}</span><span style={{ color: 'var(--ink-light)' }}>({s.reviews})</span></div>}
-                    {s.website && <a href={s.website} target="_blank" rel="noopener noreferrer" className="text-xs font-medium" style={{ color: 'var(--red)' }}>Visit ↗</a>}
-                  </div>
-                )}
+                  <a href={`https://wa.me/${v.whatsapp.replace(/\D/g,'')}`}
+                    target="_blank" rel="noopener noreferrer"
+                    className="px-4 py-2.5 rounded-xl text-sm font-medium text-white"
+                    style={{ background: '#25D366' }}>
+                    💬
+                  </a>
+                </div>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Sell CTA */}
+        <div className="rounded-2xl p-8 flex flex-wrap items-center justify-between gap-4"
+          style={{ background: 'var(--black)', border: '1px solid rgba(239,51,64,0.3)' }}>
+          <div>
+            <h3 className="font-display text-3xl text-white mb-2">Sell Cricket Gear on MyCricket.ae</h3>
+            <p className="text-sm mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              Join our verified vendor network. Free to start — only pay commission on sales.
+            </p>
+            <div className="flex flex-wrap gap-4 mt-3 text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>
+              <span>✓ Free listing</span>
+              <span>✓ Only 10% commission</span>
+              <span>✓ Weekly payouts to UAE bank</span>
+              <span>✓ Your own vendor dashboard</span>
+            </div>
+          </div>
+          <Link href="/vendor/onboarding"
+            className="px-6 py-3 rounded-xl text-sm font-medium text-white flex-shrink-0"
+            style={{ background: 'var(--red)' }}>
+            Start Selling Free →
+          </Link>
         </div>
       </div>
     </div>
