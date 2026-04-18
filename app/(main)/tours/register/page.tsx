@@ -154,7 +154,7 @@ function TourRegisterForm() {
             {isOutbound ? (
               <div className="md:col-span-2">
                 <label className="block text-xs text-white/40 mb-2">Destination Country *</label>
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
                   {TOUR_DESTINATIONS.map(d => (
                     <button key={d.code} type="button" onClick={() => update('destination_country', d.code)}
                       className="py-2 px-3 rounded-lg text-xs flex flex-col items-center gap-1 transition-all"

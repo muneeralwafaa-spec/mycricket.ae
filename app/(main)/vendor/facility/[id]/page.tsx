@@ -168,7 +168,7 @@ export default function VendorFacilityDetailPage({ params }: { params: { id: str
         </div>
 
         {/* Quick stats */}
-        <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="mt-6 grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {[
             { label: 'Total Bookings', value: '0', icon: '📅' },
             { label: 'This Month', value: 'AED 0', icon: '💰' },

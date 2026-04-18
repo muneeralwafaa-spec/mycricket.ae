@@ -281,7 +281,7 @@ export default async function ClassifiedDetailPage({ params }: { params: Promise
         {/* Related listings */}
         <div className="mt-10">
           <h2 className="font-display text-3xl mb-5" style={{ color: 'var(--black)' }}>Similar Listings</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {relatedAds.filter(r => r.id !== id).slice(0, 4).map(r => (
               <Link key={r.id} href={`/classifieds/${r.id}`}
                 className="rounded-2xl overflow-hidden card-hover block"

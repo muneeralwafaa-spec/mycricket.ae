@@ -40,7 +40,7 @@ export default function AdminPage() {
         <div className="container-uae">
           <div className="font-mono-dm text-xs tracking-widest uppercase mb-2" style={{ color: 'var(--red)' }}>Admin</div>
           <h1 className="font-display text-5xl text-white mb-6">MyCricket.ae Admin</h1>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
             {[
               { label: 'Total Vendors', value: stats.vendors, color: 'var(--red)' },
               { label: 'Total Bookings', value: stats.bookings, color: 'var(--green)' },
@@ -62,7 +62,7 @@ export default function AdminPage() {
       </div>
 
       <div className="container-uae py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {ADMIN_SECTIONS.map(s => (
             <Link key={s.href} href={s.href}
               className="rounded-2xl p-5 card-hover block"

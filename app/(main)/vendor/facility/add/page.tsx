@@ -138,7 +138,7 @@ export default function AddFacilityPage() {
               <div className="space-y-4">
                 {slots.map((s, i) => (
                   <div key={i} className="p-4 rounded-xl" style={{ background: 'var(--off-white)', border: '1px solid var(--border)' }}>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                    <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-3">
                       <div className="md:col-span-2">
                         <label className="block text-xs mb-1" style={{ color: 'var(--ink-light)' }}>Slot Name</label>
                         <input value={s.name} onChange={e => updateSlot(i, 'name', e.target.value)} className="w-full px-3 py-2 rounded-lg text-sm outline-none" style={{ border: '1px solid var(--border)', color: 'var(--black)', background: 'white' }} />

@@ -69,7 +69,7 @@ export default function CoachesPage() {
         <div>
           <div className="font-mono-dm text-xs tracking-widest uppercase mb-2" style={{ color: 'var(--red)' }}>Officials</div>
           <h2 className="font-display text-4xl mb-6" style={{ color: 'var(--black)' }}>Umpires & Officials</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {umpires.map(u => (
               <div key={u.name} className="rounded-2xl p-5 card-hover"
                 style={{ background: (u as any).cta ? 'var(--black)' : 'var(--white)', border: (u as any).cta ? '2px dashed rgba(239,51,64,0.4)' : '1px solid var(--border)' }}>

@@ -39,7 +39,7 @@ export default function PackagesPage() {
               <Plus size={15} /> New Package
             </button>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {[
               { label: 'Active Packages', value: packages.filter(p => p.status === 'active').length, color: 'var(--green)' },
               { label: 'Sessions Used Today', value: 3, color: 'var(--gold)' },

@@ -130,7 +130,7 @@ export default function AccountProfilePage() {
         </button>
 
         {/* Quick links */}
-        <div className="mt-6 grid grid-cols-3 gap-3">
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
           {[
             { href: '/book/nets', icon: '🏟️', label: 'Book Nets' },
             { href: '/book/coach', icon: '👤', label: 'Book Coach' },

@@ -54,7 +54,7 @@ export default function ToursPage() {
           <h2 className="font-display text-4xl text-white text-center tracking-wide mb-8">
             Where Do You Want to Play?
           </h2>
-          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 lg:grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
             {TOUR_DESTINATIONS.map(d => (
               <Link key={d.code}
                 href={`/tours/register?direction=outbound&destination=${d.code}`}
@@ -79,7 +79,7 @@ export default function ToursPage() {
           <h2 className="font-display text-4xl text-white text-center tracking-wide mb-10">
             How It Works
           </h2>
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
             {howItWorks.map(h => (
               <div key={h.step} className="text-center">
                 <div className="font-display text-5xl mb-3" style={{ color: 'var(--gold)' }}>{h.step}</div>

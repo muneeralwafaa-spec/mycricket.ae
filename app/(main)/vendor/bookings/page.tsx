@@ -103,7 +103,7 @@ export default function VendorBookingsPage() {
                     <div className="font-display text-2xl" style={{ color: 'var(--green)' }}>AED {b.total_aed}</div>
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                  <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-4">
                     {[
                       { label: 'Service', value: b.facility?.name || b.coach_service?.name || 'Booking' },
                       { label: 'Date', value: new Date(b.booking_date).toLocaleDateString('en-AE', { weekday: 'short', day: 'numeric', month: 'short' }) },

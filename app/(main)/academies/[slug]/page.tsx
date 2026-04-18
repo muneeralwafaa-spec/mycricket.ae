@@ -116,7 +116,7 @@ export default async function AcademyDetailPage({ params }: { params: Promise<{ 
 
       <div className="container-uae py-10">
         {/* Quick stats */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
           <div className="rounded-2xl p-4 text-center" style={{ background: 'var(--white)', border: '1px solid var(--border)' }}>
             <div className="flex items-center justify-center gap-1 mb-1">
               <Star size={14} style={{ color: 'var(--gold)', fill: 'var(--gold)' }} />

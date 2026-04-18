@@ -88,7 +88,7 @@ export default function VendorProductsPage() {
         ) : (
           <>
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
               {[
                 { label: 'Total Products', value: display.length },
                 { label: 'Active', value: display.filter(p => p.is_active).length },

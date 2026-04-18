@@ -86,7 +86,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
         </div>
       </div>
       <div className="container-uae py-8">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map(p => (
             <Link key={p.id} href={`/shop/product/${p.id}`}
               className="rounded-2xl overflow-hidden card-hover block"

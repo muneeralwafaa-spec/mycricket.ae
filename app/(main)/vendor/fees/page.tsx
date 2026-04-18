@@ -65,7 +65,7 @@ export default function FeesPage() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
+          <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mt-5">
             {[
               { label: 'Collected', value: `AED ${totalCollected}`, color: 'var(--green)' },
               { label: 'Pending', value: `AED ${totalPending}`, color: 'var(--red)' },
@@ -132,7 +132,7 @@ export default function FeesPage() {
                 </span>
 
                 {f.status !== 'paid' && (
-                  <div className="flex gap-2 flex-shrink-0">
+                  <div className="flex gap-2 flex-shrink-0 flex-wrap">
                     {recording?.id === f.id ? (
                       <div className="flex gap-1.5 flex-wrap">
                         {PAYMENT_METHODS.map(m => (

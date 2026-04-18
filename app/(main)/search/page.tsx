@@ -128,7 +128,7 @@ function SearchResults() {
         {!query && (
           <div className="mt-10">
             <h2 className="font-display text-2xl mb-4" style={{ color: 'var(--black)' }}>Browse by Category</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
               {[
                 { href: '/academies', icon: '🏟️', label: 'Facilities' },
                 { href: '/coaches', icon: '👤', label: 'Coaches' },

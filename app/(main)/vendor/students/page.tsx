@@ -78,7 +78,7 @@ export default function StudentsPage() {
             </Link>
           </div>
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {[
               { label: 'Active', value: students.filter(s => s.status === 'active').length, color: 'var(--green)' },
               { label: 'Beginners', value: students.filter(s => s.skill_level === 'beginner').length, color: 'var(--gold)' },
@@ -202,7 +202,7 @@ export default function StudentsPage() {
         )}
 
         {/* Quick actions bar */}
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="mt-8 grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {[
             { href: '/vendor/attendance', icon: '📋', label: 'Mark Attendance', color: 'var(--green)' },
             { href: '/vendor/fees', icon: '💰', label: 'Fee Collection', color: 'var(--gold)' },

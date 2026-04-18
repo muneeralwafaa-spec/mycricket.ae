@@ -46,7 +46,7 @@ export default function BatchesPage() {
               <Plus size={15} /> New Batch
             </button>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {[
               { label: 'Active Batches', value: batches.filter(b => b.is_active).length, color: 'var(--green)' },
               { label: 'Total Students', value: totalStudents, color: 'var(--gold)' },

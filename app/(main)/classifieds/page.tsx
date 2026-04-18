@@ -105,7 +105,7 @@ export default function ClassifiedsPage() {
         <div className="text-sm mb-5" style={{ color: 'var(--ink-light)' }}>
           {filtered.length} listing{filtered.length !== 1 ? 's' : ''} found
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {filtered.map(ad => (
             <Link key={ad.id} href={`/classifieds/${ad.id}`}
               className="rounded-2xl overflow-hidden card-hover block"

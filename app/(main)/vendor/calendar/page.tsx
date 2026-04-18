@@ -173,8 +173,9 @@ export default function CalendarPage() {
           ))}
         </div>
 
-        {/* Slot × Time grid */}
-        <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid var(--border)' }}>
+        {/* Slot × Time grid — scrollable on mobile */}
+        <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
+        <div className="rounded-2xl overflow-hidden min-w-[640px]" style={{ border: '1px solid var(--border)' }}>
           {/* Header */}
           <div className="grid" style={{ gridTemplateColumns: '80px repeat(5, 1fr)', background: 'var(--black)' }}>
             <div className="p-3 text-xs font-mono-dm" style={{ color: 'rgba(255,255,255,0.4)' }}>Time</div>
@@ -215,6 +216,7 @@ export default function CalendarPage() {
               })}
             </div>
           ))}
+        </div>
         </div>
 
         {/* Today's bookings list */}

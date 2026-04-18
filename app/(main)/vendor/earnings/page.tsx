@@ -30,7 +30,7 @@ export default function VendorEarningsPage() {
         <div className="container-uae">
           <Link href="/vendor/dashboard" className="text-xs font-mono-dm mb-4 block" style={{ color: 'rgba(255,255,255,0.4)' }}>← Dashboard</Link>
           <h1 className="font-display text-5xl text-white mb-6">Earnings & Payouts</h1>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {[
               { label: 'Total Earned', value: `AED ${stats.total_earned.toFixed(0)}`, color: 'var(--green)' },
               { label: 'Pending Payout', value: `AED ${stats.pending_payout.toFixed(0)}`, color: 'var(--gold)' },

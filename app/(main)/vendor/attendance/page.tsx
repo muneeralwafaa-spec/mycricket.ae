@@ -127,7 +127,7 @@ export default function AttendancePage() {
                 </div>
 
                 {/* Status buttons */}
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 ml-auto">
                   {([
                     { id: 'present' as const, icon: <Check size={14} />, bg: 'var(--green)', label: 'P' },
                     { id: 'late' as const, icon: <Clock size={14} />, bg: 'var(--gold)', label: 'L' },

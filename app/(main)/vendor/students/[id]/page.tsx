@@ -80,7 +80,7 @@ export default function StudentDetailPage({ params }: { params: { id: string } }
           </div>
 
           {/* Quick stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mt-6">
             {[
               { label: 'Attendance', value: `${s.attendance_pct}%`, color: s.attendance_pct >= 75 ? 'var(--green)' : 'var(--red)' },
               { label: 'Sessions This Month', value: s.sessions_this_month, color: 'var(--gold)' },

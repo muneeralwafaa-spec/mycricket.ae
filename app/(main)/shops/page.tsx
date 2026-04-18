@@ -55,7 +55,7 @@ export default function ShopsPage() {
           <p className="text-sm mb-8" style={{ color: 'rgba(255,255,255,0.5)' }}>
             Verified cricket equipment vendors across the UAE. Shop from multiple stores in one checkout.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {STATS.map(s => (
               <div key={s.label} className="rounded-2xl p-4 text-center"
                 style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
@@ -71,7 +71,7 @@ export default function ShopsPage() {
         {/* How multi-vendor works */}
         <div className="rounded-2xl p-6 mb-8" style={{ background: 'var(--white)', border: '1px solid var(--border)' }}>
           <h2 className="font-display text-2xl mb-4" style={{ color: 'var(--black)' }}>How Multi-Vendor Shopping Works</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {[
               { step: '1', icon: '🔍', title: 'Browse Products', desc: 'Shop from multiple UAE cricket vendors in one place' },
               { step: '2', icon: '🛒', title: 'Add to Cart', desc: 'Mix products from different vendors in one cart' },
@@ -119,7 +119,7 @@ export default function ShopsPage() {
                 <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--ink-light)' }}>{v.desc}</p>
 
                 {/* Stats */}
-                <div className="grid grid-cols-3 gap-3 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-4">
                   {[
                     { label: 'Products', value: v.products },
                     { label: 'Orders', value: v.orders + '+' },

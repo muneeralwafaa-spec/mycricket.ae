@@ -245,7 +245,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </div>
 
             {/* Trust badges */}
-            <div className="grid grid-cols-3 gap-2 mb-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mb-5">
               {[
                 { icon: <Truck size={14} />, text: 'Free delivery AED 200+' },
                 { icon: <RefreshCw size={14} />, text: '7-day returns' },
@@ -327,7 +327,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         {related.length > 0 && (
           <div>
             <h2 className="font-display text-3xl mb-5" style={{ color: 'var(--black)' }}>You Might Also Like</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {related.map(rid => {
                 const rp = PRODUCTS[rid]
                 if (!rp) return null

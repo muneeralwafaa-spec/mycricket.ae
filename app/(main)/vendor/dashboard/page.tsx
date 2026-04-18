@@ -88,7 +88,7 @@ export default function VendorDashboardPage() {
             </div>
             <Link href="/vendor/settings" className="px-4 py-2 rounded-xl text-xs" style={{ border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.6)' }}>⚙️ Settings</Link>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {[
               { label: "Today's Bookings", value: stats.today, color: 'var(--red)' },
               { label: 'Confirmed', value: stats.confirmed, color: 'var(--green)' },

@@ -51,7 +51,7 @@ export default function VendorOrdersPage() {
         <div className="container-uae">
           <Link href="/vendor/dashboard" className="text-xs font-mono-dm mb-4 block" style={{ color: 'rgba(255,255,255,0.4)' }}>← Dashboard</Link>
           <h1 className="font-display text-5xl text-white mb-2">My Orders</h1>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
+          <div className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mt-5">
             {[
               { label: 'Total Orders', value: orders.length, color: 'var(--red)' },
               { label: 'Pending Action', value: pendingCount, color: 'var(--gold)' },
