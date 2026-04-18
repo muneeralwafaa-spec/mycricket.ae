@@ -66,8 +66,8 @@ export default function CartPage() {
                 </div>
                 {items.filter(i => i.vendor === vendor).map(item => (
                   <div key={item.id} className="flex items-start gap-4 p-5" style={{ background: 'var(--white)', borderBottom: '1px solid var(--border)' }}>
-                    <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    <div className="w-20 h-20 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg,#1a1a2e,#16213e)' }}>
+                      <span style={{ fontSize: 32 }}>🏏</span>
                     </div>
                     <div className="flex-1 min-w-0">
                       <Link href={`/shop/product/${item.id}`} className="text-sm font-medium line-clamp-2 hover:underline" style={{ color: 'var(--black)' }}>

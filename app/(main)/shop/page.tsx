@@ -41,6 +41,25 @@ const VENDORS = [
   { id: 'v4', name: 'ICC Academy Store', rating: 4.9, products: 31, verified: true, emirate: 'Dubai Sports City' },
 ]
 
+
+const CAT_EMOJI: Record<string, string> = {
+  Bats: '🏏', Pads: '🦺', Gloves: '🥊', Helmets: '⛑️', Balls: '🔴',
+  Shoes: '👟', Jerseys: '🎽', Kits: '🎒', Bags: '🎒', Equipment: '⚙️', Bundles: '📦',
+}
+const CAT_BG: Record<string, string> = {
+  Bats: 'linear-gradient(135deg,#1a1a2e,#16213e)',
+  Pads: 'linear-gradient(135deg,#1a1a2e,#16213e)',
+  Gloves: 'linear-gradient(135deg,#0d2137,#1a3a5c)',
+  Helmets: 'linear-gradient(135deg,#2e1a1a,#4a2d2d)',
+  Balls: 'linear-gradient(135deg,#2e1a1a,#4a2d2d)',
+  Shoes: 'linear-gradient(135deg,#1a2e1a,#2d4a2d)',
+  Jerseys: 'linear-gradient(135deg,#0d2137,#1a3a5c)',
+  Kits: 'linear-gradient(135deg,#1a2e1a,#2d4a2d)',
+  Bags: 'linear-gradient(135deg,#1a2e1a,#2d4a2d)',
+  Equipment: 'linear-gradient(135deg,#2e2a1a,#4a3d1a)',
+  Bundles: 'linear-gradient(135deg,#1a2e1a,#2d4a2d)',
+}
+
 export default function ShopPage() {
   const [category, setCategory] = useState('All')
   const [brand, setBrand] = useState('All Brands')
@@ -186,9 +205,8 @@ export default function ShopPage() {
             <div key={p.id} className="rounded-2xl overflow-hidden card-hover"
               style={{ background: 'var(--white)', border: '1px solid var(--border)' }}>
               <Link href={`/shop/product/${p.id}`} className="block">
-                <div className="relative h-44 overflow-hidden">
-                  <img src={p.image} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
-                  <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 60%)' }} />
+                <div className="relative flex items-center justify-center" style={{ height: 176, background: CAT_BG[p.category] || 'linear-gradient(135deg,#1a1a2e,#16213e)' }}>
+                  <span style={{ fontSize: 56 }}>{CAT_EMOJI[p.category] || '🏏'}</span>
                   {p.badge && (
                     <span className="absolute top-2 left-2 text-xs px-2 py-0.5 rounded-full font-medium"
                       style={{ background: p.badge === 'Sale' ? 'var(--red)' : p.badge === 'New' ? 'var(--green)' : 'var(--gold)', color: 'white', fontSize: 10 }}>

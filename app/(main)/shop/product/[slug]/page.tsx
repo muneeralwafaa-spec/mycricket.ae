@@ -147,8 +147,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
           {/* Image */}
           <div>
-            <div className="rounded-2xl overflow-hidden relative mb-3" style={{ height: 400 }}>
-              <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+            <div className="rounded-2xl overflow-hidden relative mb-3 flex items-center justify-center" style={{ height: 400, background: 'linear-gradient(135deg,#1a1a2e,#0d2137)' }}>
+              <span style={{ fontSize: 120 }}>{p.category === 'Bats' ? '🏏' : p.category === 'Helmets' ? '⛑️' : p.category === 'Balls' ? '🔴' : p.category === 'Gloves' ? '🥊' : p.category === 'Jerseys' ? '🎽' : p.category === 'Shoes' ? '👟' : p.category === 'Equipment' ? '⚙️' : p.category === 'Kits' ? '🎒' : '🏏'}</span>
               {p.badge && (
                 <span className="absolute top-4 left-4 text-sm px-3 py-1 rounded-full font-medium"
                   style={{ background: p.badge === 'Sale' ? 'var(--red)' : p.badge === 'New' ? 'var(--green)' : 'var(--gold)', color: 'white' }}>
@@ -288,8 +288,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   <Link key={rid} href={`/shop/product/${rid}`}
                     className="rounded-2xl overflow-hidden card-hover block"
                     style={{ background: 'var(--white)', border: '1px solid var(--border)', textDecoration: 'none' }}>
-                    <div className="h-32 overflow-hidden">
-                      <img src={rp.image} alt={rp.name} className="w-full h-full object-cover" loading="lazy" />
+                    <div className="h-32 flex items-center justify-center" style={{ background: 'linear-gradient(135deg,#1a1a2e,#16213e)' }}>
+                      <span style={{ fontSize: 40 }}>🏏</span>
                     </div>
                     <div className="p-3">
                       <div className="text-xs font-medium leading-tight mb-1 line-clamp-2" style={{ color: 'var(--black)' }}>{rp.name}</div>
