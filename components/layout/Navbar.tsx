@@ -5,7 +5,8 @@ import { Menu, X, ShoppingCart, ChevronDown, LogOut, LayoutDashboard, Package, U
 import { useAuth } from '@/components/auth/AuthProvider'
 
 const navLinks = [
-  { href: '/academies',   label: 'Facilities' },
+  { href: '/academies',   label: 'Academies' },
+  { href: '/facilities',  label: 'Facilities' },
   { href: '/coaches',     label: 'Coaches' },
   { href: '/book/nets',   label: 'Book Nets' },
   { href: '/shop',        label: 'Shop' },
